@@ -1,0 +1,1 @@
+java --enable-preview -jar target/com.tugalsan.dsk.file.sync-jar-with-dependencies_cleaned-and-migrated.jar run_all
