@@ -53,9 +53,9 @@ public class MainCgi {
     }
 
     public static void run(String param_src, String param_dst, boolean guiMode) {
-        d.cr("run", "staring...", param_src, param_dst);
+        d.cr("run", "starting...", param_src, param_dst);
         if (guiMode) {
-            MainLog.add("STARING " + param_src + " -- > -- " + param_dst);
+            MainLog.add("STARTING " + param_src + " -- > -- " + param_dst);
         }
         var o_src = TS_FilePropertiesUtils.getValue(Main.props, param_src);
         if (o_src.isEmpty()) {
