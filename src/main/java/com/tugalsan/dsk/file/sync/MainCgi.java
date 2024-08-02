@@ -108,8 +108,9 @@ public class MainCgi {
         var overwrite = true;
         var parallel = true;
         var skipIfSameSizeAndDateAndTime = true;
+        var deleteIfExtra = true;
         TGS_Func_OutBool_In1<Path> filter = path -> true;
-        TS_DirectoryUtils.copyDirectory(p_src, p_dst, overwrite, parallel, filter, skipIfSameSizeAndDateAndTime);
+        TS_DirectoryUtils.copyDirectory(p_src, p_dst, overwrite, parallel, filter, skipIfSameSizeAndDateAndTime, deleteIfExtra);
         d.cr("run", "ended", param_src, param_dst);
         if (guiMode) {
             MainLog.add("ENDED " + param_src + " -- > -- " + param_dst);
