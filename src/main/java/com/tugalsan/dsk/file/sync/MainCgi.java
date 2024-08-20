@@ -45,10 +45,12 @@ public class MainCgi {
             d.cr("run_all", "------------------------------------------------------");
             d.cr("run_all", "WAITING FOR THE NEXT ROUND...", TGS_Time.of());
             d.cr("run_all", "scheduledHour: " + scheduledHour);
+            System.gc();
         });
         while (true) {
             TS_ThreadWait.days("wait", threadKiller, 1);
             d.cr("run_all", "alive");
+            System.gc();
         }
     }
 
