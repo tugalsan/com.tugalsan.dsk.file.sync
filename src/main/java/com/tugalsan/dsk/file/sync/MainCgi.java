@@ -3,7 +3,6 @@ package com.tugalsan.dsk.file.sync;
 import com.tugalsan.api.file.properties.server.TS_FilePropertiesUtils;
 import com.tugalsan.api.file.server.TS_DirectoryUtils;
 import com.tugalsan.api.file.server.TS_PathUtils;
-import com.tugalsan.api.function.client.TGS_Func_In1;
 import com.tugalsan.api.function.client.TGS_Func_OutBool_In1;
 import com.tugalsan.api.log.server.TS_Log;
 import com.tugalsan.api.os.server.TS_OsRamUtils;
@@ -25,7 +24,6 @@ public class MainCgi {
         TS_ThreadAsync.now(threadKiller, kt -> {
             var scheduledHour = 23;
             TS_ThreadAsyncScheduled.everyDays_whenHourShow_willBlockAtFirst(threadKiller, Duration.ofHours(8), true, 1, scheduledHour, _ -> {
-//        TS_ThreadAsyncScheduled.everyDays(threadKiller, Duration.ofHours(8), true, 1, kt -> {
                 d.cr("run_all", "------------------------------------------------------");
                 d.cr("run_all", "STARTING THE ROUND", TGS_Time.of());
                 d.cr("run_all", "scheduledHour: " + scheduledHour);
