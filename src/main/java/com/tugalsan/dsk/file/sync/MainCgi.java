@@ -3,10 +3,12 @@ package com.tugalsan.dsk.file.sync;
 import com.tugalsan.api.file.properties.server.TS_FilePropertiesUtils;
 import com.tugalsan.api.file.server.TS_DirectoryUtils;
 import com.tugalsan.api.file.server.TS_PathUtils;
+import com.tugalsan.api.function.client.TGS_Func_In1;
 import com.tugalsan.api.function.client.TGS_Func_OutBool_In1;
 import com.tugalsan.api.log.server.TS_Log;
 import com.tugalsan.api.os.server.TS_OsRamUtils;
 import com.tugalsan.api.thread.server.TS_ThreadWait;
+import com.tugalsan.api.thread.server.async.TS_ThreadAsync;
 import com.tugalsan.api.thread.server.async.TS_ThreadAsyncScheduled;
 import com.tugalsan.api.thread.server.sync.TS_ThreadSyncTrigger;
 import com.tugalsan.api.time.client.TGS_Time;
@@ -20,37 +22,39 @@ public class MainCgi {
     final private static TS_Log d = TS_Log.of(MainCgi.class);
 
     public static void run_all(TS_ThreadSyncTrigger threadKiller) {
-        var scheduledHour = 23;
-        TS_ThreadAsyncScheduled.everyDays_whenHourShow(threadKiller, Duration.ofHours(8), true, 1, scheduledHour, kt -> {
+        TS_ThreadAsync.now(threadKiller, kt -> {
+            var scheduledHour = 23;
+            TS_ThreadAsyncScheduled.everyDays_whenHourShow_willBlockAtFirst(threadKiller, Duration.ofHours(8), true, 1, scheduledHour, _ -> {
 //        TS_ThreadAsyncScheduled.everyDays(threadKiller, Duration.ofHours(8), true, 1, kt -> {
-            d.cr("run_all", "------------------------------------------------------");
-            d.cr("run_all", "STARTING THE ROUND", TGS_Time.of());
-            d.cr("run_all", "scheduledHour: " + scheduledHour);
-            d.cr("run_all", "curDir: " + pathCurDir);
-            d.cr("run_all", "pathProperties: " + pathProperties);
-            var u_props = TS_FilePropertiesUtils.createPropertyReader(Main.pathProperties);
-            if (u_props.isExcuse()) {
-                d.ce("run_all", "ERROR: " + u_props.excuse().getMessage());
-                Main.props = TS_FilePropertiesUtils.empty();
-                TS_FilePropertiesUtils.write(Main.props, Main.pathCurDir);
-            } else {
-                d.ce("run_all", "props.read: OK");
-                Main.props = u_props.value();
-            }
-            run(MainRecordFolder.PARAM_SRC_0, MainRecordFolder.PARAM_DST_0, false);
-            run(MainRecordFolder.PARAM_SRC_1, MainRecordFolder.PARAM_DST_1, false);
-            run(MainRecordFolder.PARAM_SRC_2, MainRecordFolder.PARAM_DST_2, false);
-            run(MainRecordFolder.PARAM_SRC_3, MainRecordFolder.PARAM_DST_3, false);
-            run(MainRecordFolder.PARAM_SRC_4, MainRecordFolder.PARAM_DST_4, false);
-            run(MainRecordFolder.PARAM_SRC_5, MainRecordFolder.PARAM_DST_5, false);
-            d.cr("run_all", "------------------------------------------------------");
-            d.cr("run_all", "WAITING FOR THE NEXT ROUND...", TGS_Time.of());
-            d.cr("run_all", "scheduledHour: " + scheduledHour);
-            System.gc();
+                d.cr("run_all", "------------------------------------------------------");
+                d.cr("run_all", "STARTING THE ROUND", TGS_Time.of());
+                d.cr("run_all", "scheduledHour: " + scheduledHour);
+                d.cr("run_all", "curDir: " + pathCurDir);
+                d.cr("run_all", "pathProperties: " + pathProperties);
+                var u_props = TS_FilePropertiesUtils.createPropertyReader(Main.pathProperties);
+                if (u_props.isExcuse()) {
+                    d.ce("run_all", "ERROR: " + u_props.excuse().getMessage());
+                    Main.props = TS_FilePropertiesUtils.empty();
+                    TS_FilePropertiesUtils.write(Main.props, Main.pathCurDir);
+                } else {
+                    d.ce("run_all", "props.read: OK");
+                    Main.props = u_props.value();
+                }
+                run(MainRecordFolder.PARAM_SRC_0, MainRecordFolder.PARAM_DST_0, false);
+                run(MainRecordFolder.PARAM_SRC_1, MainRecordFolder.PARAM_DST_1, false);
+                run(MainRecordFolder.PARAM_SRC_2, MainRecordFolder.PARAM_DST_2, false);
+                run(MainRecordFolder.PARAM_SRC_3, MainRecordFolder.PARAM_DST_3, false);
+                run(MainRecordFolder.PARAM_SRC_4, MainRecordFolder.PARAM_DST_4, false);
+                run(MainRecordFolder.PARAM_SRC_5, MainRecordFolder.PARAM_DST_5, false);
+                d.cr("run_all", "------------------------------------------------------");
+                d.cr("run_all", "WAITING FOR THE NEXT ROUND...", TGS_Time.of());
+                d.cr("run_all", "scheduledHour: " + scheduledHour);
+                System.gc();
+            });
         });
         while (true) {
             TS_OsRamUtils.freeIt();
-            TS_OsRamUtils.toStringAll(true, true);
+            System.out.println(TS_OsRamUtils.toStringAll(true, true));
             TS_ThreadWait.hours("wait", threadKiller, 1);
         }
     }
