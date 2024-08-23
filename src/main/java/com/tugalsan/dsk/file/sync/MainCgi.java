@@ -5,6 +5,7 @@ import com.tugalsan.api.file.server.TS_DirectoryUtils;
 import com.tugalsan.api.file.server.TS_PathUtils;
 import com.tugalsan.api.function.client.TGS_Func_OutBool_In1;
 import com.tugalsan.api.log.server.TS_Log;
+import com.tugalsan.api.os.server.TS_OsRamUtils;
 import com.tugalsan.api.thread.server.TS_ThreadWait;
 import com.tugalsan.api.thread.server.async.TS_ThreadAsyncScheduled;
 import com.tugalsan.api.thread.server.sync.TS_ThreadSyncTrigger;
@@ -48,9 +49,9 @@ public class MainCgi {
             System.gc();
         });
         while (true) {
-            TS_ThreadWait.days("wait", threadKiller, 1);
-            d.cr("run_all", "alive");
-            System.gc();
+            TS_OsRamUtils.freeIt();
+            TS_OsRamUtils.toStringAll(true, true);
+            TS_ThreadWait.hours("wait", threadKiller, 1);
         }
     }
 
