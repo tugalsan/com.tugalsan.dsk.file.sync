@@ -50,6 +50,7 @@ public class MainCgi {
     }
 
     public static void run_idx_externally(int idx) {
+        d.cr("run_idx_externally", "idx", idx, "begin");
         var driver = Main.pathJar;
         List<String> args = new ArrayList();
         args.add("\"" + TS_OsJavaUtils.getPathJava().resolveSibling("java.exe") + "\"");
@@ -57,12 +58,12 @@ public class MainCgi {
         args.add("\"" + driver.toAbsolutePath().toString() + "\"");
         args.add("run_idx");
         args.add(String.valueOf(idx));
-        d.cr("_execute", "args", args);
+        d.cr("run_idx_externally", "args", args);
         var cmd = args.stream().collect(Collectors.joining(" "));
-        d.cr("_execute", "cmd", cmd);
+        d.cr("run_idx_externally", "cmd", cmd);
         var p = TS_OsProcess.of(args);
-        System.out.println(p.output);
-        d.cr("run_idx_externally", "idx", idx, "elapsed", p.elapsed.getSeconds() / 60 + " min");
+        System.out.println(p);
+        d.cr("run_idx_externally", "idx", idx, "end");
     }
 
     public static void run_idx(int idx) {
