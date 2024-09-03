@@ -4,7 +4,7 @@ public class MainRun {
 
     private static void thing(String param_src, String param_dst) {
         MainAsync.run(() -> {
-            MainCgi.run(param_src, param_dst, true);
+            MainCgi.run_params(param_src, param_dst, true);
         });
     }
 

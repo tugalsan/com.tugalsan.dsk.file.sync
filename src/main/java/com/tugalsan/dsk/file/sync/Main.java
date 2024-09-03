@@ -1,5 +1,6 @@
 package com.tugalsan.dsk.file.sync;
 
+import com.tugalsan.api.cast.client.TGS_CastUtils;
 import com.tugalsan.api.desktop.server.*;
 import com.tugalsan.api.file.properties.server.TS_FilePropertiesUtils;
 import com.tugalsan.api.file.server.TS_FileUtils;
@@ -22,6 +23,7 @@ public class Main {
 
     public static Path pathCurDir = TS_DesktopPathUtils.currentFolder();
     public static Path pathProperties = pathCurDir.resolve(Main.class.getPackageName() + ".properties");
+    public static Path pathJar = pathCurDir.resolve("home").resolve("target").resolve(Main.class.getPackageName() + "-jar-with-dependencies_cleaned-and-migrated.jar");
     public static Properties props;
     public static MainFrame mainFrame;
 
@@ -56,6 +58,18 @@ public class Main {
                 //return; //no return because gui mode!
             } else if (args[0].equals("run_all")) {
                 MainCgi.run_all(threadKiller);
+                return;
+            } else if (args[0].equals("run_idx")) {
+                if (args.length != 2) {
+                    d.ce("main", "ERROR args.length != 2", args.length);
+                    return;
+                }
+                var idx = TGS_CastUtils.toInteger(args[1]);
+                if (idx == null) {
+                    d.ce("main", "ERROR args[1] as idx == null", args[1]);
+                    return;
+                }
+                MainCgi.run_idx(idx);
                 return;
             } else {
                 d.ce("main", "ERROR unknown arg[0]", args[0]);
