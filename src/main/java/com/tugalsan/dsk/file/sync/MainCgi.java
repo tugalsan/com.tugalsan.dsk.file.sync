@@ -31,12 +31,12 @@ public class MainCgi {
             d.cr("run_all", "------------------------------------------------------");
             d.cr("run_all", "STARTING THE ROUND", TGS_Time.of());
 //            d.cr("run_all", "scheduledHour: " + scheduledHour);
-            run_idx_externally(0);
-            run_idx_externally(1);
-            run_idx_externally(2);
-            run_idx_externally(3);
-            run_idx_externally(4);
-            run_idx_externally(5);
+            run_idx(0);
+            run_idx(1);
+            run_idx(2);
+            run_idx(3);
+            run_idx(4);
+            run_idx(5);
             d.cr("run_all", "------------------------------------------------------");
             d.cr("run_all", "WAITING FOR THE NEXT ROUND...", TGS_Time.of());
 //            d.cr("run_all", "scheduledHour: " + scheduledHour);
