@@ -25,28 +25,42 @@ public class MainCgi {
     final private static TS_Log d = TS_Log.of(MainCgi.class);
 
     public static void run_all(TS_ThreadSyncTrigger threadKiller) {
-//        var scheduledHour = 23;
-//        TS_ThreadAsyncScheduled.everyDays_whenHourShow(threadKiller, Duration.ofHours(8), true, 1, scheduledHour, _ -> {
-        TS_ThreadAsyncScheduled.everyDays(threadKiller, Duration.ofHours(8), true, 1, _ -> {
-            d.cr("run_all", "------------------------------------------------------");
-            d.cr("run_all", "STARTING THE ROUND", TGS_Time.of());
-//            d.cr("run_all", "scheduledHour: " + scheduledHour);
-            run_idx(0);
-            run_idx(1);
-            run_idx(2);
-            run_idx(3);
-            run_idx(4);
-            run_idx(5);
-            d.cr("run_all", "------------------------------------------------------");
-            d.cr("run_all", "WAITING FOR THE NEXT ROUND...", TGS_Time.of());
-//            d.cr("run_all", "scheduledHour: " + scheduledHour);
-            System.gc();
-        });
+        boolean obeyScheduledHour = true;
+        var scheduledHour = 23;
+        if (obeyScheduledHour) {
+            TS_ThreadAsyncScheduled.everyDays_whenHourShow(threadKiller, Duration.ofHours(8), true, 1, scheduledHour, _ -> {
+                run_all_do(threadKiller, obeyScheduledHour, scheduledHour);
+            });
+        } else {
+            TS_ThreadAsyncScheduled.everyDays(threadKiller, Duration.ofHours(8), true, 1, _ -> {
+                run_all_do(threadKiller, obeyScheduledHour, scheduledHour);
+            });
+        }
         while (true) {
             TS_OsRamUtils.freeIt();
             System.out.println(TS_OsRamUtils.toStringAll(true, true));
             TS_ThreadWait.hours("wait", threadKiller, 1);
         }
+    }
+
+    private static void run_all_do(TS_ThreadSyncTrigger threadKiller, boolean obeyScheduledHour, int scheduledHour) {
+        d.cr("run_all", "------------------------------------------------------");
+        d.cr("run_all", "STARTING THE ROUND", TGS_Time.of());
+        if (obeyScheduledHour) {
+            d.cr("run_all", "scheduledHour: " + scheduledHour);
+        }
+        run_idx(0);
+        run_idx(1);
+        run_idx(2);
+        run_idx(3);
+        run_idx(4);
+        run_idx(5);
+        d.cr("run_all", "------------------------------------------------------");
+        d.cr("run_all", "WAITING FOR THE NEXT ROUND...", TGS_Time.of());
+        if (obeyScheduledHour) {
+            d.cr("run_all", "scheduledHour: " + scheduledHour);
+        }
+        System.gc();
     }
 
     public static void run_idx_externally(int idx) {
