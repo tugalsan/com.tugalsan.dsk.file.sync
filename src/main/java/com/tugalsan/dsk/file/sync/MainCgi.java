@@ -27,15 +27,16 @@ public class MainCgi {
     public static void run_all(TS_ThreadSyncTrigger threadKiller) {
         boolean obeyScheduledHour = true;
         var scheduledHour = 23;
-        if (obeyScheduledHour) {
-            TS_ThreadAsyncScheduled.everyDays_whenHourShow(threadKiller, Duration.ofHours(8), true, 1, scheduledHour, _ -> {
-                run_all_do(threadKiller, obeyScheduledHour, scheduledHour);
-            });
-        } else {
-            TS_ThreadAsyncScheduled.everyDays(threadKiller, Duration.ofHours(8), true, 1, _ -> {
-                run_all_do(threadKiller, obeyScheduledHour, scheduledHour);
-            });
-        }
+//        if (obeyScheduledHour) {
+        run_all_do(threadKiller, obeyScheduledHour, scheduledHour);
+        TS_ThreadAsyncScheduled.everyDays_whenHourShow(threadKiller, Duration.ofHours(8), true, 1, scheduledHour, _ -> {
+            run_all_do(threadKiller, obeyScheduledHour, scheduledHour);
+        });
+//        } else {
+//            TS_ThreadAsyncScheduled.everyDays(threadKiller, Duration.ofHours(8), true, 1, _ -> {
+//                run_all_do(threadKiller, obeyScheduledHour, scheduledHour);
+//            });
+//        }
         while (true) {
             TS_OsRamUtils.freeIt();
             System.out.println(TS_OsRamUtils.toStringAll(true, true));

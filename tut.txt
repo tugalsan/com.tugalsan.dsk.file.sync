@@ -1,0 +1,6 @@
+[kısayol oluştur @ shell:startup]
+D:\bin\com.tugalsan.dsk.file.sync\run_cli.bat
+
+[mouse ile durdurmanın iptal edilmesi]
+- yanlışlıkla mouse ile dokunulduğunda, program entera basılana kadar durur. 
+- ilk çalıştırıldığında, commandPrompt penceresi özelliklerine girerek, "hızlı düzenleme modu" nu kapatmak gereklidir.
